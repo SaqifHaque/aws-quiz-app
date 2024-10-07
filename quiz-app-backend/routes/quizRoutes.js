@@ -16,4 +16,7 @@ router.post('/submit-answers/:id', quizController.submitQuiz);
 
 router.post('/save-question-set', quizController.saveJSONQuestion);
 
+// DELETE question set and cascade delete related data
+router.delete('/question-sets/:id', quizController.deleteQuestionSet);
+
 module.exports = router;
