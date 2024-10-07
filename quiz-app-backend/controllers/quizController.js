@@ -205,7 +205,7 @@ exports.saveJSONQuestion = (req, res) => {
 exports.getResultsById = (req, res) => {
   const questionSetId = req.params.id;
   const query = 'SELECT * FROM results WHERE question_set_id =  ?';
-  
+
   db.query(query, [questionSetId], (err, results) => {
     if (err) {
       return res.status(500).json({ error: 'Failed to fetch question_sets' });
@@ -214,3 +214,24 @@ exports.getResultsById = (req, res) => {
     }
   });
 };
+
+// Delete a question set and cascade delete related questions and results
+exports.deleteQuestionSet = (req, res) => {
+  const questionSetId = req.params.id;
+
+  const deleteQuery = 'DELETE FROM question_sets WHERE id = ?';
+
+  db.query(deleteQuery, [questionSetId], (err, result) => {
+    if (err) {
+      return res.status(500).json({ error: 'Failed to delete question set' });
+    }
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'Question set not found' });
+    }
+
+    // Successful deletion
+    res.json({ message: 'Question set and related data deleted successfully' });
+  });
+};
+
