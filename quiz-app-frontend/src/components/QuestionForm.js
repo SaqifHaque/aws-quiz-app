@@ -56,7 +56,14 @@ const QuestionForm = () => {
             cols={50}
             value={jsonData}
             onChange={(e) => setJsonData(e.target.value)}
-            placeholder="Paste your JSON questions here"
+            placeholder='Paste your JSON questions here. Example format:
+            {
+              "questionText": "Your question here?",
+              "options": ["Option 1", "Option 2", "Option 3", "Option 4"],
+              "correctAnswer": ["Correct Option"],
+              "type": "single/multiple",
+              "points": 1
+            },'
             required
             className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-600"
           />
