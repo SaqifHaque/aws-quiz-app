@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getAllQuestionSets } from '../utils/api';
+import { getAllQuestionSets, deleteQuestionSet } from '../utils/api';
 import { Link } from 'react-router-dom';
 
 const Home = () => {
@@ -17,6 +17,19 @@ const Home = () => {
     fetchQuestionSets();
   }, []);
 
+  // Handle deleting a question set
+  const handleDelete = async (id) => {
+    if (window.confirm('Are you sure you want to delete this question set?')) {
+      try {
+        await deleteQuestionSet(id);
+        setQuestionSets(questionSets.filter(set => set.id !== id)); // Remove deleted set from UI
+        console.log('Question set deleted successfully');
+      } catch (error) {
+        console.error('Error deleting question set:', error);
+      }
+    }
+  };
+
   return (
     <div className="p-6 h-screen bg-gradient-to-r from-blue-800 via-indigo-900 to-gray-900">
       <h2 className="text-4xl font-bold mb-8 text-white text-center">Available Question Sets</h2>
@@ -33,6 +46,14 @@ const Home = () => {
                   {/* Using a Unicode clock character */}
                   <span className="mr-2 text-lg">⏱️</span>
                   <p className="text-lg">{set.timer} minutes</p>
+                  <span
+                    className="text-red-600 cursor-pointer ml-4"
+                    onClick={() => handleDelete(set.id)}
+                    role="button" // Accessibility improvement for screen readers
+                    aria-label="Delete"
+                  >
+                    🗑️ 
+                  </span>
                 </div>
               </div>
               <Link

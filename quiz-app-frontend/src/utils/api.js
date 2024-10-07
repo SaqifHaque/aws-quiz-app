@@ -57,3 +57,14 @@ export const getResultById = async (resultId) => {
     throw error;
   }
 };
+
+// Delete question set by ID
+export const deleteQuestionSet = async (id) => {
+  try {
+    const response = await axios.delete(`${API_URL}/question-sets/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting question set:', error);
+    throw error;
+  }
+};
