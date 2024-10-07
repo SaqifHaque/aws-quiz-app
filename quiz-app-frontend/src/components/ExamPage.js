@@ -81,54 +81,55 @@ const ExamPage = () => {
     },
     [setAnswers]
   );
-  
 
   
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg">
-      <h3 className="text-2xl font-semibold mb-4 text-blue-600">{ title }</h3>
-      <p className="text-lg font-semibold text-red-500 mb-6">
-        Time Left: {Math.floor(timeLeft / 60)}:{timeLeft % 60 < 10 ? '0' : ''}{timeLeft % 60}
-      </p>
-      
-      <form>
-      {questions.map((q, index) => (
-          <div key={q.id} className="mb-6">
-            <h4 className="text-xl font-medium mb-2 text-gray-800">
-              {index + 1}. {q.question_text}
-            </h4>
-            {q.options.map((option) => {
-              const isChecked =
-                q.type === 'multiple'
-                  ? answers[q.id]?.includes(option)
-                  : answers[q.id] === option;
-              return (
-                <label key={option} className="block mb-2">
-                  <input
-                    type={q.type === 'multiple' ? 'checkbox' : 'radio'}
-                    name={`question-${q.id}`}
-                    value={option}
-                    checked={isChecked || false}
-                    onChange={(e) =>
-                      handleAnswerChange(q.id, option, q.type, e.target.checked)
-                    }
-                    className="mr-2"
-                  />
-                  {option}
-                </label>
-              );
-            })}
-          </div>
-        ))}
-        <button
-          type="button"
-          onClick={handleSubmit}
-          className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
-        >
-          Submit
-        </button>
-      </form>
+    <div className="p-6 h-maxz bg-gradient-to-r from-blue-800 via-indigo-900 to-gray-900">
+      <div className="max-w-4xl mx-auto p-6 bg-gray-100 shadow-lg rounded-lg">
+        <h3 className="text-2xl font-semibold mb-4 text-blue-600">{ title }</h3>
+        <p className="text-lg font-semibold text-red-500 mb-6">
+          Time Left: {Math.floor(timeLeft / 60)}:{timeLeft % 60 < 10 ? '0' : ''}{timeLeft % 60}
+        </p>
+        
+        <form>
+        {questions.map((q, index) => (
+            <div key={q.id} className="mb-6">
+              <h4 className="text-xl font-medium mb-2 text-gray-800">
+                {index + 1}. {q.question_text}
+              </h4>
+              {q.options.map((option) => {
+                const isChecked =
+                  q.type === 'multiple'
+                    ? answers[q.id]?.includes(option)
+                    : answers[q.id] === option;
+                return (
+                  <label key={option} className="block mb-2">
+                    <input
+                      type={q.type === 'multiple' ? 'checkbox' : 'radio'}
+                      name={`question-${q.id}`}
+                      value={option}
+                      checked={isChecked || false}
+                      onChange={(e) =>
+                        handleAnswerChange(q.id, option, q.type, e.target.checked)
+                      }
+                      className="mr-2"
+                    />
+                    {option}
+                  </label>
+                );
+              })}
+            </div>
+          ))}
+          <button
+            type="button"
+            onClick={handleSubmit}
+            className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
+          >
+            Submit
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
